@@ -1,0 +1,45 @@
+project_name: msolsprayng
+
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: linux
+    ldflags:
+      - -s -w
+    binary: '{{ .ProjectName }}'
+    main: main.go
+    goos:
+      - linux
+    goarch:
+      - amd64
+  - id: windows
+    ldflags:
+      - -s -w
+    binary: '{{ .ProjectName }}'
+    main: main.go
+    goos:
+      - windows
+    goarch:
+      - amd64
+      - arm64
+  - id: darwin
+    ldflags:
+      - -s -w
+    binary: '{{ .ProjectName }}'
+    main: main.go
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+- format: zip
+  name_template: >-
+    {{ .ProjectName }}_
+    {{- if eq .Os "darwin" }}macOS_
+    {{- else if eq .Os "windows"}}Windows_
+    {{- else }}{{ .Os }}_{{ end }}{{ .Arch }}
+  files:
+    - README.md
