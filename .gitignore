@@ -29,5 +29,4 @@ go.work
 dist/
 msolsprayng
 msolsprayng.exe
-users.txt
-password.txt
+*.txt
