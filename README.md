@@ -1,6 +1,7 @@
 # msolsprayng
 This is a Golang port of [github.com/dafthack/MSOLSpray](https://github.com/dafthack/MSOLSpray). This tool will spray one password against a list of Microsoft accounts. Since Microsoft's GraphQL endpoint is very verbose, we get error codes back that can give us information about the login process / account state. Below is a list of error codes. All error codes can be found [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-aadsts-error-codes).
 
+
 | Code        | Meaning                                                      |
 |-------------|--------------------------------------------------------------|
 | AADSTS50126 | Invalid Password                                             |
@@ -33,24 +34,22 @@ go build -ldflags="-s -w" .
 # to build & install binary into GOPATH/bin
 go install .
 ```
+
 ## Usage
 ```
-msolsprayng -u users.txt -P "Summer2023" [OPTIONS]
-
+msolsprayng [OPTIONS]
+	
 Options:
-    -u = Path to file containing E-Mail addresses to be sprayed
-    -p = Path to file containing the password to spray (will use first line)
-    -P = Password to spray (argument)
-    -w = Amount of runners/threads (optional, default: 1, max. 3)
-    -o = Output file name (optional)
-    -j = Format output & log as JSON (optional, overwrites -v)
-    -v = Verbose mode (optional, overriden by -j)
+    -u, --users              <string>    Path to file containing E-Mail addresses to be sprayed
+    -p, --password-file      <string>    Path to file containing the password to spray (will use first line)
+    -P, --Password           <string>    Password to spray (argument)
 
-Examples:
-    msolsprayng -u users.txt -P "Summer2023"
-    msolsprayng -u users.txt -P "Summer2023" -j -o results.json
-    msolsprayng -u users.txt -p password.txt -o results.txt
-    msolsprayng -u users.txt -p password.txt -v -w 3
+    -o, --outfile            <string>    Path to the logfile
+    -j, --json                           Format output as JSON (default: false)
+    -v, --verbose                        Enable verbose output (default: false)
+
+    -w, --workers            <int>       Amount of workers / "threads" (default: 1, max 3)
+    -h, --help                           Prints this text
 ```
 
 ## Legal
